@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy New Year</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        #message-container {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        #new-year-message {
+            font-size: 2.5em;
+            color: #d32f2f;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        #options {
+            margin-top: 20px;
+            display: none;
+            padding: 20px;
+            background: linear-gradient(135deg, #e0f7fa, #ffffff); /* Soft aqua gradient */
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Light shadow */
+        }
+
+        button {
+            background-color: #80deea; /* Light teal */
+            color: #004d40; /* Deep teal text */
+            border: none;
+            border-radius: 12px; /* Rounded corners */
+            padding: 10px 20px;
+            font-size: 1.2em;
+            margin: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease; /* Smooth hover transition */
+            box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.15); /* Slight depth */
+        }
+
+        button:hover {
+            background-color: #4dd0e1; /* Slightly darker teal on hover */
+            box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+            transform: translateY(-2px); /* Lift effect */
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            text-align: center;
+        }
+
+        .modal button {
+            margin-top: 10px;
+            background-color: #d32f2f;
+        }
+
+        .modal button:hover {
+            background-color: #b71c1c;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .firework {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff0;
+            border-radius: 50%;
+            animation: explode 1.5s ease-out infinite;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(10);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        #define_text {
+            font-size: 30px;
+            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="message-container">
+        <h1 id="new-year-message">Chúc Mừng Bạn Là Người May Mắn Nhận Được Lời Chúc Mừng Năm Mới</h1>
+        <div class="option_c" id="options">
+            <p id="define_text">Bạn là ai?</p>
+            <button id="option1">Mẹ</button>
+            <button id="option2">Cu</button>
+        </div>
+    </div>
+
+    <div id="fireworks-container"></div>
+
+    <div id="popup-modal" class="modal">
+        <div class="modal-content">
+            <p id="modal-message"></p>
+            <button id="close-modal">Đọc Xong Mừng Tủi 🙌</button>
+        </div>
+    </div>
+
+    <div id="overlay" class="overlay"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const newYearMessage = document.getElementById("new-year-message");
+            const options = document.getElementById("options");
+            const popupModal = document.getElementById("popup-modal");
+            const modalMessage = document.getElementById("modal-message");
+            const closeModalButton = document.getElementById("close-modal");
+            const overlay = document.getElementById("overlay");
+            const fireworksContainer = document.getElementById("fireworks-container");
+
+            const colors = ["#ff0", "#f00", "#0f0", "#00f", "#f0f", "#0ff"];
+
+            function createFirework() {
+                const firework = document.createElement("div");
+                firework.className = "firework";
+                firework.style.left = `${Math.random() * 100}vw`;
+                firework.style.top = `${Math.random() * 100}vh`;
+                firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                fireworksContainer.appendChild(firework);
+
+                setTimeout(() => {
+                    firework.remove();
+                }, 1500);
+            }
+
+            setInterval(createFirework, 200);
+
+            setTimeout(() => {
+                newYearMessage.style.display = "none";
+                options.style.display = "block";
+            }, 5000);
+
+            document.getElementById("option1").addEventListener("click", function() {
+                modalMessage.textContent = "Gửi mẹ - Mẹ ơi, năm mới đến rồi, con chúc mẹ thật nhiều sức khỏe, luôn mạnh mẽ vượt qua mọi khó khăn trong cuộc sống";
+                popupModal.style.display = "block";
+                overlay.style.display = "block";
+            });
+
+            document.getElementById("option2").addEventListener("click", function() {
+                modalMessage.textContent = "Bà lội nhà ngươi - chúc ngươi học hành tấn tới, điểm cao chót vót như tên bắn. Hãy ngoan ngoãn, biết nghe lời ta, đừng để ta phải nhắc nhiều";
+                popupModal.style.display = "block";
+                overlay.style.display = "block";
+            });
+
+            closeModalButton.addEventListener("click", function() {
+                popupModal.style.display = "none";
+                overlay.style.display = "none";
+            });
+
+            overlay.addEventListener("click", function() {
+                popupModal.style.display = "none";
+                overlay.style.display = "none";
+            });
+        });
+    </script>
+</body>
+</html>
